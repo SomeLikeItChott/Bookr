@@ -34,12 +34,12 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <form class="navbar-form navbar-left" role="search">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search">
-              </div>
-              <a href="selectbookedition.html">
-              Submit
-            </a>
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for...">
+                <span class="input-group-btn">
+                  <a href="selectbookedition.html"><button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button></a>
+                </span>
+              </div><!-- /input-group -->
             </form>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="booksforsale.html">Books You're Selling</a></li>
@@ -58,11 +58,13 @@
 
         <div class="row">
           <div class="col-xs-6">
-            <img class="img-responsive" src="upload.png">
+            <img class="img-responsive img-thumbnail" src="upload.png">
           </div>
           <div class="col-xs-6">
             <input type="text" class="form-control" placeholder="ISBN" aria-describedby="basic-addon2">
+            <br>
             <input type="text" class="form-control" placeholder="Price" aria-describedby="basic-addon2">
+            <br>
             <input type="text" class="form-control" placeholder="Condition" aria-describedby="basic-addon2">
           </div>
         </div>

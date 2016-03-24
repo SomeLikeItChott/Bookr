@@ -34,12 +34,12 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <form class="navbar-form navbar-left" role="search">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search">
-              </div>
-              <a href="selectbookedition.html">
-              Submit
-            </a>
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for...">
+                <span class="input-group-btn">
+                  <a href="selectbookedition.html"><button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button></a>
+                </span>
+              </div><!-- /input-group -->
             </form>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="booksforsale.html">Books You're Selling</a></li>
@@ -57,6 +57,12 @@
 
 
         <div class="row">
+          <div class="col-xs-12"</div>
+          <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Great!</strong> This item has been posted for sale!
+          </div>
+        </div>
           <div class="col-xs-6">
             <img class="img-responsive" src="book.png">
           </div>
@@ -65,14 +71,15 @@
             <h4>4th Edition</h4>
             <h4>$27</h4>
             <h4>Condition: Good</h4>
-            <a href="accountpublic.html"><h4><span class="label label-default">schott: <span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></span></h4></a>
+            <a href="accountpublic.html"><h4><span class="label label-primary label-default">schott: <span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></span></h4></a>
           </div>
         </div>
         <div class="row">
           <div class="col-xs-1"></div>
           <div class="col-xs-10">
-            <div class="well well-sm">Posted for Sale</div>
-            <h3 class="text-center">Contact Seller</h3>
+            <br>
+            <a class="btn center-block btn-primary" href="sellitem.html" role="button">Edit Listing</a>
+            <h3 class="text-center">Contact Info</h3>
             <div class="media">
               <div class="media-left">
                 <a href="#">
