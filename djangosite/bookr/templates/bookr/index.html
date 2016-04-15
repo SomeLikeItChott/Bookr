@@ -1,0 +1,18 @@
+{% extends 'bookr/base.html' %}
+
+{% block pagetitle %}Bookr{% endblock %}
+
+{% block body %}
+<div class="jumbotron">
+	<h1 class="text-center">Bookr</h1>
+	<p class="text-center">Connect with other students to buy and sell textbooks</p>
+</div>
+<div class="input-group">
+	<input type="text" class="form-control" placeholder="Search for a book">
+	<span class="input-group-btn">
+		<button class="btn btn-default" onclick="location.href='selectbookedition.html';" type="button">Search</button>
+	</span>
+</div><!-- /input-group -->
+<br>    
+<button class="btn center-block btn-default" onclick="location.href='sellitem.html';" type="button">Sell a book</button>
+{% endblock %}
