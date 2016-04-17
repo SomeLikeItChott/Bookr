@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 #idk about on_delete, might have made some mistakes there.
 #probably helps that there is no way to delete users
 class Book(models.Model):
+	title = models.CharField(max_length=200, default='No title found')
+	author = models.CharField(max_length=200, default='No authors found')
 	picture = models.ImageField()
 	seller = models.ForeignKey(User, on_delete=models.CASCADE)
 	price = models.FloatField()

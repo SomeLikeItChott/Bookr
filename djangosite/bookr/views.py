@@ -5,6 +5,11 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .models import Contact, Book
 from .forms import *
+from isbnlib import *
+
+def book(request, book_id):
+	book = get_object_or_404(Book, pk=book_id)
+	return render(request, 'bookr/book.html', {'book': book})
 
 def sell(request):
 	if not request.user.is_authenticated():
@@ -22,12 +27,17 @@ def sell(request):
 			newcontact.contact_text = request.POST['contact_text']	
 			newcontact.contact_type = request.POST['contact_type']
 			newcontact.save()
-		if sell_form.is_valid():
+		if sell_form.is_valid() and 'sellname' in request.POST:
+			print('selling book')
 			newbook = Book()
 			newbook.seller = user
 			newbook.price = request.POST['price']
 			newbook.condition = request.POST['condition']
-			newbook.ISBN = request.POST['ISBN']
+			newbook.isbn = request.POST['isbn']
+			metadata = meta(request.POST['isbn'])
+			print(metadata['Authors'])
+			newbook.title = metadata['Title']
+			newbook.author = metadata['Authors']
 			newbook.save()
 	# if a GET (or any other method) we'll create a blank form
 	else:

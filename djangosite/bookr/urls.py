@@ -9,5 +9,6 @@ urlpatterns = [
     url(r'^register/', views.register, name='register'),
     url(r'^account/', views.private_account, name='account'),
     url(r'^sell/', views.sell, name='sell'),
+    url(r'^book/(?P<book_id>[0-9]+)/$', views.book, name='book')
 
 ]

@@ -10,7 +10,10 @@
 			<img class="img-responsive img-thumbnail" src="upload.png">
 		</div>
 		<div class="col-xs-6">
-			{{sell_form.as_p}}
+			<form id="sell_form" name="sellform" action="" method="post">
+				{{sell_form.as_p}}
+				<input type="submit" name="sellname" form="sell_form" value="Post for Sale" />
+			</form>
 		</div>
 	</div>
 	<div class="row">
@@ -19,7 +22,7 @@
 			<h3 class="text-center">Your Contact Information</h3>
 			{% include 'bookr/contacts_edit.html' %}
 			<br>
-			<a href="listeditem.html"><button type="button" class="btn btn-sm btn-default center-block">Post for Sale</button></a>
+			{#<button type="button" class="btn btn-sm btn-default center-block">#}<input type="submit" name="sellname" form="sell_form" value="Post for Sale" />{#</button>#}
 		</div>
 	</div>
 </div>
