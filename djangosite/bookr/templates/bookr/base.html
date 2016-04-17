@@ -27,7 +27,7 @@
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="index.html">Bookr</a>
+						<a class="navbar-brand" href="{% url 'index' %}">Bookr</a>
 
 					</div>
 
@@ -43,7 +43,7 @@
 						</form>
 						<ul class="nav navbar-nav navbar-right">
 							<li><a href="booksforsale.html">Books You're Selling</a></li>
-							<li><a href="sellitem.html">Sell a Book</a></li>
+							<li><a href="{% url 'sell' %}}">Sell a Book</a></li>
 							<li><a href="{% url 'account' %}">Your Account</a></li>
 							<li><a href="wishlist.html">Wishlist</a></li>
 							<li>

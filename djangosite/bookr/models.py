@@ -13,7 +13,17 @@ class Book(models.Model):
 class Seller(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	avatar = models.ImageField()
-	phone = models.CharField(max_length=20)
+
+class Contact(models.Model):
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	PHONE = 'PH'
+	EMAIL = 'EM'
+	CONTACT_TYPE_CHOICES = (
+		(PHONE, 'Phone'),
+		(EMAIL, 'Email'),
+	)
+	contact_type = models.CharField(max_length=2, choices=CONTACT_TYPE_CHOICES, default=PHONE)
+	contact_text = models.CharField(max_length=40)
 
 class Review(models.Model):
 	#these related_names might cause issues?????!?!?!?!!!

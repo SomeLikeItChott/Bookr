@@ -1,0 +1,27 @@
+
+{% extends 'bookr/base.html' %}
+
+{% block pagetitle %}Sell Item{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-xs-6">
+			<img class="img-responsive img-thumbnail" src="upload.png">
+		</div>
+		<div class="col-xs-6">
+			{{sell_form.as_p}}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-1"></div>
+		<div class="col-xs-10">
+			<h3 class="text-center">Your Contact Information</h3>
+			{% include 'bookr/contacts_edit.html' %}
+			<br>
+			<a href="listeditem.html"><button type="button" class="btn btn-sm btn-default center-block">Post for Sale</button></a>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
