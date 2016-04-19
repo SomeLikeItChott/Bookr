@@ -8,15 +8,11 @@
 {% block body %}
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-xs-6">
-			<img class="img-responsive img-thumbnail" src="{% static 'bookr/img/upload.png' %}">
-		</div>
-		<div class="col-xs-6">
+		
 			<form id="sell_form" name="sellform" enctype="multipart/form-data" action="" method="post">
 				{{sell_form.as_p}}
 				<input type="submit" name="sellname" form="sell_form" value="Post for Sale" />
 			</form>
-		</div>
 	</div>
 	<div class="row">
 		<div class="col-xs-1"></div>

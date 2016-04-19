@@ -12,7 +12,7 @@
 			<img class="img-responsive" src="{% static 'bookr/img/smile.png' %}">
 		</div>
 		<div class="col-xs-6">
-			<h3><span class="label label-primary">{{ user.username }}<br>
+			<h3><span style="display: inline-block;" class="list-group-item active">{{ user.username }}<br>
 				{% include 'bookr/stars.html' with person=user %}</span></h3>
 			</div>
 		</div>

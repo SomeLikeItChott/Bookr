@@ -6,20 +6,22 @@
 {% block body %}
 <div class="container-fluid">
 
-    {% for key, value in pairs.items %}
-    <a href="{% url 'booktype' key.id %}">
-        <div class="row">
-          <div class="col-xs-5">
-            <br>
-            <img class="img-responsive" src="{% static 'bookr/img/book.png' %}">
-          </div>
-          <div class="col-xs-7">
-            <h3>{{key.title}}</h3>
-            <div>{{key.author}}</div>
-            <strong>{{value}} Available</strong>
-          </div>
-        </div>
-      </a>
-    {% endfor %}
-    </div>
+	{% for key, value in pairs.items %}
+	<a href="{% url 'booktype' key.id %}">
+		<div class="row">
+			<div class="col-xs-5">
+				<br>
+				<img class="img-responsive" src="{% static 'bookr/img/book.png' %}">
+			</div>
+			<div class="col-xs-7">
+				<h3>{{key.title}}</h3>
+				<div>{{key.author}}</div>
+				<strong>{{value}} Available</strong>
+			</div>
+		</div>
+	</a>
+	{% empty %}
+	No books that match your search terms are available.
+	{% endfor %}
+</div>
 {% endblock %}

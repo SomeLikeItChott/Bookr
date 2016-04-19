@@ -12,6 +12,8 @@ from django.db.models import Q
 import re, os
 
 def wishlist(request):
+	if not request.user.is_authenticated():
+		return HttpResponseRedirect(reverse('login'))
 	if request.method == 'POST':
 		bookid = request.POST['bookid']
 		wish = Wish()
@@ -47,10 +49,12 @@ def search(request):
 
 		#found_entries = Book.objects.filter(entry_query).order_by('-pub_date')
 		found_entries = BookType.objects.filter(entry_query)
-	print('ajsdklfdsajlkadfsjk')
 	pairs = dict()
-	for entry in found_entries:
-		pairs[entry]=len(Book.objects.filter(booktype__id=entry.id))
+	try:
+		for entry in found_entries:
+			pairs[entry]=len(Book.objects.filter(booktype__id=entry.id))
+	except:
+		pairs = None;
 	return render(request, 'bookr/search.html', 
 		{ 'query_string': query_string, 'pairs': pairs, },)
 
