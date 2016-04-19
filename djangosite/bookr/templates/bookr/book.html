@@ -1,0 +1,66 @@
+
+{% extends 'bookr/base.html' %}
+
+{% block pagetitle %}{{ book.booktype.title }}{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+
+
+	<div class="row">
+		<div class="col-xs-6">
+			<img class="img-responsive" src="/bookr/images/uploaded/url.jpg">
+		</div>
+		<div class="col-xs-6">
+			<h2>{{ book.title }}</h2>
+			<h4>{{ book.author }}</h4>
+			<h4>${{ book.price }}</h4>
+			<h4>Condition: {{ book.condition }}</h4>
+			<a href="{% if not book.seller == None %}{% url 'account' book.seller.id%}{% endif %}">
+				<h4><span class="label label-primary">{{book.seller.username}}: <span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></span></h4>
+			</a>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-1"></div>
+		<div class="col-xs-10">
+			<h5 class="text-center">
+				{% if private %}
+				Other users will see this contact information:
+				{% else %}
+				To purchase this book, contact the seller:
+				{% endif %}
+			</h5>
+			<h3 class="text-center">Contact Info</h3>
+			
+			{% if private %}
+			{% include 'bookr/contacts_private.html' %}
+			{% else %}
+			{% include 'bookr/contacts_public.html' %}
+			{% endif %}
+
+			{% if not private %}
+			<br>
+
+			<form class="input-group" method="POST" action="{%  url 'wishlist' %}">
+				<input type="hidden" name="bookid" value="{{book.id}}" class="form-control" placeholder="Search for a book">
+				<button type="submit" value="{{book.id}}" class="btn btn-default center-block">Add book to wishlist</button>
+			</form>
+
+
+
+
+			<br>
+			<button type="button" class="btn btn-default center-block" data-toggle="modal" data-target="#myModal">
+				Leave a review for this seller
+			</button>
+			<br>
+			{% endif %}
+
+		</div>
+	</div>
+
+</div>
+
+{% endblock %}

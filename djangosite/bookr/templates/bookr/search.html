@@ -1,0 +1,24 @@
+{% extends 'bookr/base.html' %}
+
+{% block pagetitle %}Search{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+    {% for booktype in found_entries.all %}
+    <a href="{% url 'booktype' booktype.id %}">
+        <div class="row">
+          <div class="col-xs-5">
+            <br>
+            <img class="img-responsive" src="book.png">
+          </div>
+          <div class="col-xs-7">
+            <h3>{{booktype.title}}</h3>
+            <div>{{booktype.author}}</div>
+            <strong>jkfdhioowivdoi Available</strong>
+          </div>
+        </div>
+      </a>
+    {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,18 @@
+
+{% if not person.seller.rating == None %}
+{% if person.seller.rating == 5 %}
+★★★★★
+{% elif person.seller.rating == 4 %}
+★★★★☆
+{% elif person.seller.rating == 3 %}
+★★★☆☆
+{% elif person.seller.rating == 2 %}
+★★☆☆☆
+{% elif person.seller.rating == 1 %}
+★☆☆☆☆
+{% else %}
+☆☆☆☆☆
+{% endif %}
+{% else %}
+☆☆☆☆☆
+{% endif %}

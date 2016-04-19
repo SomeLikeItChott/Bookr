@@ -1,42 +1,54 @@
 {% extends 'bookr/base.html' %}
 
-{% block pagetitle %}Your Account{% endblock %}
-
+{% block pagetitle %}{% if private %}Your Account{% else %}{{ user.username }}{% endif %}{% endblock %}
+{% load staticfiles %}
 {% block body %}
 
 <div class="container-fluid">
 
 
-		<div class="row">
-		  <div class="col-xs-6">
-			<img class="img-responsive" src="smile.png">
-		  </div>
-		  <div class="col-xs-6">
-			<h3><span class="label label-primary">{{ request.user.username }}<br>
-			<span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></span></h3>
-		  </div>
+	<div class="row">
+		<div class="col-xs-6">
+			<img class="img-responsive" src="{% static 'bookr/img/smile.png' %}">
 		</div>
-		<div class="row">
-		  <div class="col-xs-1"></div>
-		  <div class="col-xs-10">
-			<h4><a href="booksforsale.html"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Books you're selling</a></h4>
-			<h3 class="text-center">Your Contact Information</h3>
-
-			{% include 'bookr/contacts_edit.html' %}
-
-			<h3 class="text-center">Reviews</h3>
-			<div class="media">
-			  <div class="media-left">
-				<a href="#">
-				  <img src="smile.png" length="64" width="64">
-				</a>
-			  </div>
-			  <div class="media-body">
-				<h4 class="media-heading"><a>seyeonkim</a> gave 4 stars</h4>
-				"He gave fast replies and delivery"
-			  </div>
+		<div class="col-xs-6">
+			<h3><span class="label label-primary">{{ user.username }}<br>
+				{% include 'bookr/stars.html' with person=user %}</span></h3>
 			</div>
-		  </div>
 		</div>
+		<div class="row">
+			<div class="col-xs-1"></div>
+			<div class="col-xs-10">
+				<h4><a href="{% url 'books_for_sale' user.id %}"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Books {%if private%}you're{%else%}they're{%endif%} selling</a></h4>
+				<h3 class="text-center">{%if private%}Your{%else%}{{user.username}}'s{%endif%} Contact Information</h3>
 
-{% endblock %}
+				{% if private %}
+				{% include 'bookr/contacts_private.html' %}
+				{% else %}
+				{% include 'bookr/contacts_public.html' %}
+				{% endif %}
+
+				<h3 class="text-center">Reviews</h3>
+				{% for review in reviews %}
+				<div class="media">
+					<div class="media-left">
+						<a href="{% url 'account' review.rater.id %}">
+							<img src="{% static 'bookr/img/smile.png' %}" length="64" width="64">
+						</a>
+					</div>
+					<div class="media-body">
+						<h4 class="media-heading"><a href="{% url 'account' review.rater.id %}">{{review.rater.username}}</a> gave {{review.stars}} stars</h4>
+						{{review.text}}
+					</div>
+				</div>
+				{% empty %}
+				There are no reviews for this user.
+				{% endfor %}
+			</div>
+			{% if not private %}
+			{% include 'bookr/review_modal.html' %}
+			{% endif %}
+		</div>
+		
+
+		{% endblock %}

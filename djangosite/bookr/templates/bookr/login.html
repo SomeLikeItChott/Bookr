@@ -2,13 +2,15 @@
 
 {% block pagetitle %}Login{% endblock %}
 
+{% load crispy_forms_tags %}
+
 {% block body %}
-	<h1 class="text-center">Login</h1>
+<h1 class="text-center">Login</h1>
 <form action="" method="post">
-        {{ form.as_p }}
-        <input type="submit" value="Login" />
-    </form>
+	{{ form|crispy }}
+	<input type="submit" value="Login" />
+</form>
 <br>    
-{#<button class="btn center-block btn-default" onclick="location.href='sellitem.html';" type="submit">Register</button>#}
+<a href="{% url 'register' %}"><button type="button" class="btn btn-default">Register</button></a>
 {#<input type="submit" value="Vote" />#}
 {% endblock %}

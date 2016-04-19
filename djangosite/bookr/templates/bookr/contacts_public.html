@@ -1,0 +1,12 @@
+{% for contact in user.contact_set.all %}
+<div class="media">
+	<div class="media-left">
+		<a href="#">
+			<span class="glyphicon glyphicon-{% if contact.contact_type = 'PH' %}earphone{% else %}envelope{% endif %}" aria-hidden="true"></span>
+		</a>
+	</div>
+	<div class="media-body">
+		<h4 class="media-heading">{{ contact.contact_text }}</h4>
+	</div>
+</div>
+{% endfor %}

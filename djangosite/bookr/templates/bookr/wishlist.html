@@ -1,0 +1,35 @@
+{% extends 'bookr/base.html' %}
+
+{% block pagetitle %}Wishlist{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+	
+	<h2 class="text-center">Your Wishlist</h2>
+	{% for wish in wishes %}
+	<a href="{% url 'book' wish.book.id %}">
+		<div class="row">
+			<div class="col-xs-5">
+				<br>
+				<img class="img-responsive" src="book.png">
+			</div>
+			<div class="col-xs-7">
+				<h3>{{wish.book.booktype.title}}</h3>
+				<div>{{wish.book.booktype.author}}</div>
+				<button type="button" class="btn btn-default">Remove</button>
+			</div>
+		</div>
+	</a>
+	{% endfor %}
+	
+	<br>
+	<form class="input-group" method="GET" action="{%  url 'search' %}">
+		<input type="text" name="q" id="id_q" class="form-control" placeholder="Search for a book">
+		<span class="input-group-btn">
+			<button class="btn btn-default" type="submit">Search</button>
+		</span>
+	</form>
+	
+</div>
+{% endblock %}
