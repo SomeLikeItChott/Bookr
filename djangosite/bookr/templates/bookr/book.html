@@ -14,8 +14,8 @@
 			<img class="img-responsive" src="{% static 'bookr/img/book.png' %}">
 		</div>
 		<div class="col-xs-6">
-			<h2>{{ book.title }}</h2>
-			<h4>{{ book.author }}</h4>
+			<h2>{{ book.booktype.title }}</h2>
+			<h4>{{ book.booktype.author }}</h4>
 			<h4>${{ book.price }}</h4>
 			<h4>Condition: {{ book.condition }}</h4>
 			<a href="{% if not book.seller == None %}{% url 'account' book.seller.id%}{% endif %}">
