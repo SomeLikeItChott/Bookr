@@ -161,8 +161,11 @@ def sell(request):
 				newbt.author = ', '.join(metadata['Authors'])
 				newbt.isbn = isbn
 				newbt.save()
-				newbook.booktype = newbt					
+				newbook.booktype = newbt
+				print('the end')					
 			newbook.save()
+			print('time to go')
+			print(newbook.id)
 			return HttpResponseRedirect(reverse('book', args=(newbook.id,)))
 	# if a GET (or any other method) we'll create a blank form
 	else:
