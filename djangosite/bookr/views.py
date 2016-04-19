@@ -278,7 +278,7 @@ def account(request, user_id):
 	except:
 		user = User.objects.get(id=user_id)
 		private = False
-		logged_in = False
+		logged_in = True
 		contact_form = AddContactForm()
 		rating_form = RatingForm()
 		reviews = Review.objects.filter(ratee=user)
