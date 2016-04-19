@@ -139,6 +139,7 @@ def sell(request):
 		if sell_form.is_valid() and 'sellname' in request.POST:
 			print('selling book')
 			newbook = Book()
+			print('fjaksldkfsa')
 			print(user)
 			newbook.seller = user
 			newbook.price = request.POST['price']
