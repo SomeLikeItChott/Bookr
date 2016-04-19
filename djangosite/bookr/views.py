@@ -137,7 +137,7 @@ def sell(request):
 			newcontact.contact_type = request.POST['contact_type']
 			newcontact.save()
 		if sell_form.is_valid() and 'sellname' in request.POST:
-			print('selling book')
+			print('selling fffbook')
 			newbook = Book()
 			print('fjaksldkfsa')
 			print(user)
