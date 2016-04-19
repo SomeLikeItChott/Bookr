@@ -149,7 +149,7 @@ def sell(request):
 			print('ayy')
 			try:
 				print('waaah')
-				newbook.booktype = BookType.objects.get(isbn__exact=isbn)
+				newbook.booktype = BookType.objects.get(isbn__iexact=isbn)
 			except:
 				print('kill me')
 				newbt = BookType()
