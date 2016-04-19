@@ -143,8 +143,8 @@ def sell(request):
 			newbook.price = request.POST['price']
 			newbook.condition = request.POST['condition']
 			#handle_uploaded_file(request.FILES['image'])
-			newbook.picture = sell_form.cleaned_data['image']
-			print(newbook.picture)
+			#newbook.picture = sell_form.cleaned_data['image']
+			#print(newbook.picture)
 			isbn = EAN13(clean(request.POST['isbn']))
 			try:
 				newbook.booktype = BookType.objects.get(isbn__exact=isbn)
