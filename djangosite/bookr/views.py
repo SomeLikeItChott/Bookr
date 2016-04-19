@@ -98,6 +98,7 @@ def book(request, book_id):
 	try:
 		logged_in = True
 		if int(book.seller.id) == int(request.user.id):
+			rating_form = RatingForm()
 			user = request.user
 			private = True
 			if not request.user.is_authenticated():
