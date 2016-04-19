@@ -154,6 +154,7 @@ def book(request, book_id):
 		private = False
 		logged_in = False
 		contact_form = AddContactForm()
+		rating_form = RatingForm()
 	return render(request, 'bookr/book.html', {'book': book, 'user': user, 'private': private, 'contact_form': contact_form, 'logged_in': logged_in, 'rating_form': rating_form,})
 
 def sell(request):
