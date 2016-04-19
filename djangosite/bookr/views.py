@@ -60,38 +60,38 @@ def search(request):
 
 #from http://julienphalip.com/post/2825034077/adding-search-to-a-django-site-in-a-snap
 def normalize_query(query_string,
-                    findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
-                    normspace=re.compile(r'\s{2,}').sub):
-    ''' Splits the query string in invidual keywords, getting rid of unecessary spaces
-        and grouping quoted words together.
-        Example:
-        
-        >>> normalize_query('  some random  words "with   quotes  " and   spaces')
-        ['some', 'random', 'words', 'with quotes', 'and', 'spaces']
-    
-    '''
-    return [normspace(' ', (t[0] or t[1]).strip()) for t in findterms(query_string)] 
+					findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
+					normspace=re.compile(r'\s{2,}').sub):
+	''' Splits the query string in invidual keywords, getting rid of unecessary spaces
+		and grouping quoted words together.
+		Example:
+		
+		>>> normalize_query('  some random  words "with   quotes  " and   spaces')
+		['some', 'random', 'words', 'with quotes', 'and', 'spaces']
+	
+	'''
+	return [normspace(' ', (t[0] or t[1]).strip()) for t in findterms(query_string)] 
 #from http://julienphalip.com/post/2825034077/adding-search-to-a-django-site-in-a-snap
 def get_query(query_string, search_fields):
-    ''' Returns a query, that is a combination of Q objects. That combination
-        aims to search keywords within a model by testing the given search fields.
-    
-    '''
-    query = None # Query to search for every search term        
-    terms = normalize_query(query_string)
-    for term in terms:
-        or_query = None # Query to search for a given term in each field
-        for field_name in search_fields:
-            q = Q(**{"%s__icontains" % field_name: term})
-            if or_query is None:
-                or_query = q
-            else:
-                or_query = or_query | q
-        if query is None:
-            query = or_query
-        else:
-            query = query & or_query
-    return query
+	''' Returns a query, that is a combination of Q objects. That combination
+		aims to search keywords within a model by testing the given search fields.
+	
+	'''
+	query = None # Query to search for every search term        
+	terms = normalize_query(query_string)
+	for term in terms:
+		or_query = None # Query to search for a given term in each field
+		for field_name in search_fields:
+			q = Q(**{"%s__icontains" % field_name: term})
+			if or_query is None:
+				or_query = q
+			else:
+				or_query = or_query | q
+		if query is None:
+			query = or_query
+		else:
+			query = query & or_query
+	return query
 
 def book(request, book_id):
 	book = get_object_or_404(Book, pk=book_id)
@@ -142,6 +142,7 @@ def sell(request):
 			newbook.seller = user
 			newbook.price = request.POST['price']
 			newbook.condition = request.POST['condition']
+			print('fadjsl')
 			#handle_uploaded_file(request.FILES['image'])
 			#newbook.picture = sell_form.cleaned_data['image']
 			#print(newbook.picture)
@@ -169,9 +170,9 @@ def sell(request):
 	return render(request, 'bookr/sell.html', {'user': user, 'contact_form': contact_form, 'sell_form': sell_form })
 
 def handle_uploaded_file(f):
-    with open("bookr/images/test.jpg", 'wb+') as destination:
-        for chunk in f.chunks():
-            destination.write(chunk)
+	with open("bookr/images/test.jpg", 'wb+') as destination:
+		for chunk in f.chunks():
+			destination.write(chunk)
 
 def account(request, user_id):
 	if int(user_id) == int(request.user.id):
