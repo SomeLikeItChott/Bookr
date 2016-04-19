@@ -156,7 +156,9 @@ def sell(request):
 			except:
 				print('kill me')
 				newbt = BookType()
+				print('wow')
 				metadata = meta(request.POST['isbn'])
+				print('help')
 				newbt.title = metadata['Title']
 				newbt.author = ', '.join(metadata['Authors'])
 				newbt.isbn = isbn
