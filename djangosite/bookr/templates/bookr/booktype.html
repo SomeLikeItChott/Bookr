@@ -22,7 +22,7 @@
             <div>Condition: {{book.condition}}</div>
             <a href="{% url 'account' book.seller.id %}">
             <p><span class="label label-primary">{{book.seller}} {% include 'bookr/stars.html' with person=book.seller %}</span></p></a>
-            <a href="viewitem.html"><button type="button" class="btn btn-sm btn-default">View Item</button></a>
+            <a href="{% url 'book' book.id %}"><button type="button" class="btn btn-sm btn-default">View Item</button></a>
           </div>
         </div>
       </a>
