@@ -125,10 +125,12 @@ def sell(request):
 		return HttpResponseRedirect(reverse('login'))
 	user = request.user
 	if request.method == 'POST':
-		sell_form = SellForm(request.POST, request.FILES)
-		contact_form = AddContactForm(request.POST)
+		
+		
 		if contact_form.is_valid():
 			# process the data in form.cleaned_data as required
+			contact_form = AddContactForm(request.POST)
+			sell_form = SellForm()
 			# ...
 			# redirect to a new URL:
 			newcontact = Contact()
@@ -137,12 +139,16 @@ def sell(request):
 			newcontact.contact_type = request.POST['contact_type']
 			newcontact.save()
 		if sell_form.is_valid() and 'sellname' in request.POST:
+			sell_form = SellForm(request.POST, request.FILES)
+			contact_form = AddContactForm()
 			print('selling book')
 			newbook = Book()
 			newbook.seller = user
 			newbook.price = request.POST['price']
 			newbook.condition = request.POST['condition']
-			
+			#handle_uploaded_file(request.FILES['image'])
+			#newbook.picture = sell_form.cleaned_data['image']
+			#print(newbook.picture)
 			isbn = EAN13(clean(request.POST['isbn']))
 			try:
 				newbook.booktype = BookType.objects.get(isbn__exact=isbn)
