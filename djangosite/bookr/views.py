@@ -159,16 +159,15 @@ def sell(request):
 				print('wow')
 				metadata = meta(request.POST['isbn'])
 				print('help')
-				newbt.title = metadata['Title']
-				print('amaze')
-				newbt.author = ', '.join(metadata['Authors'])
-				print('anime')
+				try:
+					newbt.title = metadata['Title']
+					newbt.author = ', '.join(metadata['Authors'])
+				except:
+					newbt.title = 'No title found' + isbn
+					newbt.author = 'No authors found' + isbn
 				newbt.isbn = isbn
-				print('anime')
 				newbt.save()
-				print('anime')
 				newbook.booktype = newbt
-				print('the end')					
 			newbook.save()
 			print('time to go')
 			print(newbook.id)
