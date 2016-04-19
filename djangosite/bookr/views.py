@@ -125,12 +125,10 @@ def sell(request):
 		return HttpResponseRedirect(reverse('login'))
 	user = request.user
 	if request.method == 'POST':
-		
-		
+		sell_form = SellForm(request.POST, request.FILES)
+		contact_form = AddContactForm(request.POST)
 		if contact_form.is_valid():
 			# process the data in form.cleaned_data as required
-			contact_form = AddContactForm(request.POST)
-			sell_form = SellForm()
 			# ...
 			# redirect to a new URL:
 			newcontact = Contact()
@@ -139,8 +137,6 @@ def sell(request):
 			newcontact.contact_type = request.POST['contact_type']
 			newcontact.save()
 		if sell_form.is_valid() and 'sellname' in request.POST:
-			sell_form = SellForm(request.POST)
-			contact_form = AddContactForm()
 			print('selling book')
 			newbook = Book()
 			newbook.seller = user
