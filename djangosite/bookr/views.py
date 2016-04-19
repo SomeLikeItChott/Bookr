@@ -95,26 +95,31 @@ def get_query(query_string, search_fields):
 
 def book(request, book_id):
 	book = get_object_or_404(Book, pk=book_id)
-	if int(book.seller.id) == int(request.user.id):
-		user = request.user
-		private = True
-		if not request.user.is_authenticated():
-			return HttpResponseRedirect(reverse('login'))
-		if request.method == 'POST':
-			contact_form = AddContactForm(request.POST)
-			if contact_form.is_valid():
-				# process the data in form.cleaned_data as required
-				# ...
-				# redirect to a new URL:
-				newcontact = Contact()
-				newcontact.user = user
-				newcontact.contact_text = request.POST['contact_text']	
-				newcontact.contact_type = request.POST['contact_type']
-				newcontact.save()
-		# if a GET (or any other method) we'll create a blank form
+	try:
+		if int(book.seller.id) == int(request.user.id):
+			user = request.user
+			private = True
+			if not request.user.is_authenticated():
+				return HttpResponseRedirect(reverse('login'))
+			if request.method == 'POST':
+				contact_form = AddContactForm(request.POST)
+				if contact_form.is_valid():
+					# process the data in form.cleaned_data as required
+					# ...
+					# redirect to a new URL:
+					newcontact = Contact()
+					newcontact.user = user
+					newcontact.contact_text = request.POST['contact_text']	
+					newcontact.contact_type = request.POST['contact_type']
+					newcontact.save()
+			# if a GET (or any other method) we'll create a blank form
+			else:
+				contact_form = AddContactForm()
 		else:
+			user = book.seller
+			private = False
 			contact_form = AddContactForm()
-	else:
+	except:
 		user = book.seller
 		private = False
 		contact_form = AddContactForm()
