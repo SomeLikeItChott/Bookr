@@ -160,9 +160,13 @@ def sell(request):
 				metadata = meta(request.POST['isbn'])
 				print('help')
 				newbt.title = metadata['Title']
+				print('amaze')
 				newbt.author = ', '.join(metadata['Authors'])
+				print('anime')
 				newbt.isbn = isbn
+				print('anime')
 				newbt.save()
+				print('anime')
 				newbook.booktype = newbt
 				print('the end')					
 			newbook.save()
