@@ -146,9 +146,12 @@ def sell(request):
 			#newbook.picture = sell_form.cleaned_data['image']
 			#print(newbook.picture)
 			isbn = EAN13(clean(request.POST['isbn']))
+			print('ayy')
 			try:
+				print('waaah')
 				newbook.booktype = BookType.objects.get(isbn__exact=isbn)
 			except:
+				print('kill me')
 				newbt = BookType()
 				metadata = meta(request.POST['isbn'])
 				newbt.title = metadata['Title']
