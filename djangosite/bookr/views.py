@@ -96,6 +96,7 @@ def get_query(query_string, search_fields):
 def book(request, book_id):
 	book = get_object_or_404(Book, pk=book_id)
 	try:
+		logged_in = True
 		if int(book.seller.id) == int(request.user.id):
 			user = request.user
 			private = True
@@ -118,12 +119,41 @@ def book(request, book_id):
 		else:
 			user = book.seller
 			private = False
-			contact_form = AddContactForm()
+			if request.method == 'POST':
+				contact_form = AddContactForm()
+				rating_form = RatingForm(request.POST)
+				if not request.user.is_authenticated():
+					return HttpResponseRedirect(reverse('login'))
+				if rating_form.is_valid():
+					rating = Review()
+					rating.rater = request.user
+					rating.ratee = user
+					rating.stars = request.POST['stars']
+					rating.text = request.POST['text']
+					try:
+						newseller = user.seller
+					except:
+						newseller = Seller()
+						newseller.user = user
+					allrevs = Review.objects.filter(ratee=user)
+					sum = 0
+					for rev in allrevs:
+						sum += rev.stars
+					try:
+						newseller.rating = int(sum/len(allrevs))
+					except:
+						newseller.rating = rating.stars
+					newseller.save()
+					rating.save()
+			else:
+				contact_form = AddContactForm()
+				rating_form = RatingForm()
 	except:
 		user = book.seller
 		private = False
+		logged_in = False
 		contact_form = AddContactForm()
-	return render(request, 'bookr/book.html', {'book': book, 'user': user, 'private': private, 'contact_form': contact_form,})
+	return render(request, 'bookr/book.html', {'book': book, 'user': user, 'private': private, 'contact_form': contact_form, 'logged_in': logged_in, 'rating_form': rating_form,})
 
 def sell(request):
 	if not request.user.is_authenticated():
@@ -190,57 +220,67 @@ def handle_uploaded_file(f):
 			destination.write(chunk)
 
 def account(request, user_id):
-	if int(user_id) == int(request.user.id):
-		user = request.user
-		private = True
-		if not request.user.is_authenticated():
-			return HttpResponseRedirect(reverse('login'))
-		if request.method == 'POST':
-			contact_form = AddContactForm(request.POST)
-			rating_form = RatingForm(request.POST)
-			if contact_form.is_valid():
-				newcontact = Contact()
-				newcontact.user = user
-				newcontact.contact_text = request.POST['contact_text']	
-				newcontact.contact_type = request.POST['contact_type']
-				newcontact.save()
-		# if a GET (or any other method) we'll create a blank form
-		else:
-			contact_form = AddContactForm()
-			rating_form = RatingForm()
-	else:
-		user = User.objects.get(id=user_id)
-		private = False
-		if request.method == 'POST':
-			contact_form = AddContactForm()
-			rating_form = RatingForm(request.POST)
+	try:
+		logged_in = True
+		if int(user_id) == int(request.user.id):
+			user = request.user
+			private = True
 			if not request.user.is_authenticated():
 				return HttpResponseRedirect(reverse('login'))
-			if rating_form.is_valid():
-				rating = Review()
-				rating.rater = request.user
-				rating.ratee = user
-				rating.stars = request.POST['stars']
-				rating.text = request.POST['text']
-				try:
-					newseller = user.seller
-				except:
-					newseller = Seller()
-					newseller.user = user
-				allrevs = Review.objects.filter(ratee=user)
-				sum = 0
-				for rev in allrevs:
-					sum += rev.stars
-				try:
-					newseller.rating = int(sum/len(allrevs))
-				except:
-					newseller.rating = rating.stars
-				newseller.save()
-				rating.save()
+			if request.method == 'POST':
+				contact_form = AddContactForm(request.POST)
+				rating_form = RatingForm(request.POST)
+				if contact_form.is_valid():
+					newcontact = Contact()
+					newcontact.user = user
+					newcontact.contact_text = request.POST['contact_text']	
+					newcontact.contact_type = request.POST['contact_type']
+					newcontact.save()
+			# if a GET (or any other method) we'll create a blank form
+			else:
+				contact_form = AddContactForm()
+				rating_form = RatingForm()
 		else:
-			contact_form = AddContactForm()
-			rating_form = RatingForm()
-	reviews = Review.objects.filter(ratee=user)
+			user = User.objects.get(id=user_id)
+			private = False
+			if request.method == 'POST':
+				contact_form = AddContactForm()
+				rating_form = RatingForm(request.POST)
+				if not request.user.is_authenticated():
+					return HttpResponseRedirect(reverse('login'))
+				if rating_form.is_valid():
+					rating = Review()
+					rating.rater = request.user
+					rating.ratee = user
+					rating.stars = request.POST['stars']
+					rating.text = request.POST['text']
+					try:
+						newseller = user.seller
+					except:
+						newseller = Seller()
+						newseller.user = user
+					allrevs = Review.objects.filter(ratee=user)
+					sum = 0
+					for rev in allrevs:
+						sum += rev.stars
+					try:
+						newseller.rating = int(sum/len(allrevs))
+					except:
+						newseller.rating = rating.stars
+					newseller.save()
+					rating.save()
+			else:
+				contact_form = AddContactForm()
+				rating_form = RatingForm()
+		reviews = Review.objects.filter(ratee=user)
+	except:
+		user = User.objects.get(id=user_id)
+		private = False
+		logged_in = False
+		contact_form = AddContactForm()
+		rating_form = RatingForm()
+		reviews = Review.objects.filter(ratee=user)
+
 
 	return render(request, 'bookr/account.html', {'user': user, 'contact_form': contact_form, 'rating_form': rating_form, 'private': private, 'reviews': reviews })
 

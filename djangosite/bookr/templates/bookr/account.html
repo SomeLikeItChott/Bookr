@@ -46,7 +46,7 @@
 				{% endfor %}
 			</div>
 			{% if not private %}
-			{% include 'bookr/review_modal.html' %}
+			{% include 'bookr/review_modal.html' with logged_in=logged_in %}
 			{% endif %}
 		</div>
 		

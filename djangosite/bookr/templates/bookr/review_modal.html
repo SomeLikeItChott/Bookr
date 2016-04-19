@@ -1,6 +1,10 @@
+{% if logged_in %}
 <button type="button" class="btn btn-primary center-block" data-toggle="modal" data-target="#myModal">
+{% else %}
+<a href="{% url 'login' %}"><button type="button" class="btn btn-primary center-block" action="">
+{% endif %}
 	Leave a Review
-</button>
+</button>{% if not logged_in %}</a>{% endif %}
 <br>
 
 <!-- Modal -->
