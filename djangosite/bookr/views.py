@@ -231,7 +231,10 @@ def account(request, user_id):
 				sum = 0
 				for rev in allrevs:
 					sum += rev.stars
-				newseller.rating = int(sum/len(allrevs))
+				try:
+					newseller.rating = int(sum/len(allrevs))
+				except:
+					newseller.rating = rating.stars
 				newseller.save()
 				rating.save()
 		else:
