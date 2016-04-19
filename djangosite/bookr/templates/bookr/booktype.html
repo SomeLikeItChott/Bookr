@@ -1,6 +1,7 @@
 {% extends 'bookr/base.html' %}
 
 {% block pagetitle %}{{booktype.title}}{% endblock %}
+{% load staticfiles %}
 
 {% block body %}
 <div class="container-fluid">
@@ -14,13 +15,13 @@
         <div class="row">
           <div class="col-xs-5">
             <br>
-            <img class="img-responsive" src="book.png">
+            <img class="img-responsive" src="{% static 'bookr/img/book.png' %}">
           </div>
           <div class="col-xs-7">
             <div>${{book.price}}</div>
             <div>Condition: {{book.condition}}</div>
             <a href="{% url 'account' book.seller.id %}">
-            <p><span class="label label-primary">{{book.seller}} <span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></span></p></a>
+            <p><span class="label label-primary">{{book.seller}} {% include 'bookr/stars.html' with person=book.seller %}</span></p></a>
             <a href="viewitem.html"><button type="button" class="btn btn-sm btn-default">View Item</button></a>
           </div>
         </div>

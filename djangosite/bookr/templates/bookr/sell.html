@@ -2,12 +2,14 @@
 {% extends 'bookr/base.html' %}
 
 {% block pagetitle %}Sell Item{% endblock %}
+{% load staticfiles %}
+
 
 {% block body %}
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-xs-6">
-			<img class="img-responsive img-thumbnail" src="upload.png">
+			<img class="img-responsive img-thumbnail" src="{% static 'bookr/img/upload.png' %}">
 		</div>
 		<div class="col-xs-6">
 			<form id="sell_form" name="sellform" enctype="multipart/form-data" action="" method="post">

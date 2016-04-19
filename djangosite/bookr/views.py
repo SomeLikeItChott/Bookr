@@ -48,10 +48,11 @@ def search(request):
 		#found_entries = Book.objects.filter(entry_query).order_by('-pub_date')
 		found_entries = BookType.objects.filter(entry_query)
 	print('ajsdklfdsajlkadfsjk')
-	print(query_string)
-	print(found_entries)
+	pairs = dict()
+	for entry in found_entries:
+		pairs[entry]=len(Book.objects.filter(booktype__id=entry.id))
 	return render(request, 'bookr/search.html', 
-		{ 'query_string': query_string, 'found_entries': found_entries },)
+		{ 'query_string': query_string, 'pairs': pairs, },)
 
 #from http://julienphalip.com/post/2825034077/adding-search-to-a-django-site-in-a-snap
 def normalize_query(query_string,
@@ -208,6 +209,7 @@ def account(request, user_id):
 				for rev in allrevs:
 					sum += rev.stars
 				newseller.rating = int(sum/len(allrevs))
+				newseller.save()
 				rating.save()
 		else:
 			contact_form = AddContactForm()

@@ -1,21 +1,22 @@
 {% extends 'bookr/base.html' %}
 
 {% block pagetitle %}Search{% endblock %}
+{% load staticfiles %}
 
 {% block body %}
 <div class="container-fluid">
 
-    {% for booktype in found_entries.all %}
-    <a href="{% url 'booktype' booktype.id %}">
+    {% for key, value in pairs.items %}
+    <a href="{% url 'booktype' key.id %}">
         <div class="row">
           <div class="col-xs-5">
             <br>
-            <img class="img-responsive" src="book.png">
+            <img class="img-responsive" src="{% static 'bookr/img/book.png' %}">
           </div>
           <div class="col-xs-7">
-            <h3>{{booktype.title}}</h3>
-            <div>{{booktype.author}}</div>
-            <strong>jkfdhioowivdoi Available</strong>
+            <h3>{{key.title}}</h3>
+            <div>{{key.author}}</div>
+            <strong>{{value}} Available</strong>
           </div>
         </div>
       </a>
