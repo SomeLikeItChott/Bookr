@@ -10,16 +10,18 @@ from .forms import *
 from isbnlib import *
 from django.db.models import Q
 import re, os
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def wishlist(request):
-	if not request.user.is_authenticated():
-		return HttpResponseRedirect(reverse('login'))
-	if request.method == 'POST':
-		bookid = request.POST['bookid']
+	try:
+		bookid = request.GET['bookid']
 		wish = Wish()
 		wish.user = request.user
 		wish.book = Book.objects.get(id=bookid)
 		wish.save()
+	except:
+		print('idk')
 	wishes = Wish.objects.filter(user__id=request.user.id)
 	return render(request, 'bookr/wishlist.html', {'wishes': wishes, 'user': request.user})
 
@@ -46,15 +48,21 @@ def search(request):
 	if ('q' in request.GET) and request.GET['q'].strip():
 		query_string = request.GET['q']
 		entry_query = get_query(query_string, ['title', 'author', 'isbn'])
+		query_string2 = request.GET['q']
+		entry_query2 = get_query(query_string, ['username'])
 
 		#found_entries = Book.objects.filter(entry_query).order_by('-pub_date')
 		found_entries = BookType.objects.filter(entry_query)
+		found_users = User.objects.filter(entry_query2)
 	pairs = dict()
 	try:
 		for entry in found_entries:
 			pairs[entry]=len(Book.objects.filter(booktype__id=entry.id))
+		for entry in found_users:
+			pairs[entry]='user'
 	except:
 		pairs = None;
+	print(pairs)
 	return render(request, 'bookr/search.html', 
 		{ 'query_string': query_string, 'pairs': pairs, },)
 
@@ -157,9 +165,8 @@ def book(request, book_id):
 		rating_form = RatingForm()
 	return render(request, 'bookr/book.html', {'book': book, 'user': user, 'private': private, 'contact_form': contact_form, 'logged_in': logged_in, 'rating_form': rating_form,})
 
+@login_required
 def sell(request):
-	if not request.user.is_authenticated():
-		return HttpResponseRedirect(reverse('login'))
 	user = request.user
 	if request.method == 'POST':
 		sell_form = SellForm(request.POST, request.FILES)
@@ -299,6 +306,10 @@ def index(request):
 
 def login_view(request):
 	print(request.POST)
+	try:
+		next = request.GET['next']
+	except:
+		next = "/bookr/"
 	if request.method == 'POST':
 		form = AuthenticationForm(data=request.POST)
 		if form.is_valid():
@@ -308,7 +319,11 @@ def login_view(request):
 			if user is not None:
 				if user.is_active:
 					login(request, user)
-					return HttpResponseRedirect("/bookr/")
+					if request.GET['next'] == '/bookr/user/':
+						return HttpResponseRedirect(next + str(user.id))
+					if request.GET['next'] == '/bookr/booksforsale/':
+						return HttpResponseRedirect(next + str(user.id))
+					return HttpResponseRedirect(next)
 					# Redirect to a success page.
 				else:
 					print('jafdskls')

@@ -44,7 +44,7 @@
 			{% if not private %}
 			<br>
 
-			<form class="input-group" method="POST" action="{%  url 'wishlist' %}">
+			<form class="input-group" method="GET" action="{%  url 'wishlist' %}">
 				<input type="hidden" name="bookid" value="{{book.id}}" class="form-control" placeholder="Search for a book">
 				<button type="submit" value="{{book.id}}" class="btn btn-default center-block">Add book to wishlist</button>
 			</form>

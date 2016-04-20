@@ -7,6 +7,20 @@
 <div class="container-fluid">
 
 	{% for key, value in pairs.items %}
+	{% if value == 'user' %}
+	<a href="{% url 'account' key.id %}">
+		<div class="row">
+			<div class="col-xs-5">
+				<br>
+				<img class="img-responsive" src="{% static 'bookr/img/smile.png' %}">
+			</div>
+			<div class="col-xs-7">
+				<h3><span style="display: inline-block;" class="list-group-item active">{{ key.username }}<br>
+				{% include 'bookr/stars.html' with person=key %}</span></h3>
+			</div>
+		</div>
+	</a>
+	{% else %}
 	<a href="{% url 'booktype' key.id %}">
 		<div class="row">
 			<div class="col-xs-5">
@@ -20,6 +34,7 @@
 			</div>
 		</div>
 	</a>
+	{% endif %}
 	{% empty %}
 	No books that match your search terms are available.
 	{% endfor %}
